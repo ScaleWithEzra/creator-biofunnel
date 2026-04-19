@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BioFunnel · Creator</title>
+  <meta name="description" content=""/>
+  <!--
+  ╔══════════════════════════════════════════════════════════╗
+  ║  BIOFUNNEL — CREATOR TEMPLATE  v1.0                     ║
+  ║  Built by EzzzCreative · ezzzcreative.com               ║
+  ║                                                          ║
+  ║  QUICK SETUP (5 min):                                    ║
+  ║  1. Make a copy of the BioFunnel Creator Sheet template  ║
+  ║  2. Fill in your content (name, handle, platforms, etc.) ║
+  ║  3. Publish: File → Share → Publish to web → CSV        ║
+  ║  4. Copy your Sheet ID and paste it in SHEET_ID below    ║
+  ║  5. Drag this file into Vercel → live in 60 seconds      ║
+  ║                                                          ║
+  ║  QUIZ CUSTOMIZATION:                                      ║
+  ║  Search "EDIT:" in this file to find all editable zones  ║
+  ╚══════════════════════════════════════════════════════════╝
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── CSS variables — overridden at runtime by sheet data ── */
+    :root {
+      --primary: #7C3AED;
+      --accent:  #F59E0B;
+      --bg:      #F5F3FF;
+      --text:    #1C1028;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+    body {
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 44px 20px 80px;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    .page { max-width: 480px; margin: 0 auto; }
+
+    /* ── Creator header — more personal than business ── */
+    .profile { text-align: center; margin-bottom: 20px; }
+    .avatar-wrap {
+      width: 88px; height: 88px; border-radius: 50%;
+      margin: 0 auto 14px; overflow: hidden;
+      background: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 3px var(--primary);
+    }
+    .avatar-img { width: 100%; height: 100%; object-fit: cover; display: none; }
+    .avatar-letter { font-size: 32px; font-weight: 800; color: #fff; }
+    .creator-name { font-size: 22px; font-weight: 800; letter-spacing: -0.4px; color: var(--text); margin-bottom: 2px; }
+    .creator-handle {
+      font-size: 13px; font-weight: 700;
+      color: var(--primary); margin-bottom: 6px;
+      letter-spacing: 0.2px;
+    }
+    .creator-bio { font-size: 13px; color: rgba(28,16,40,0.5); max-width: 300px; margin: 0 auto; line-height: 1.55; }
+
+    /* ── Social proof strip ── */
+    .social-proof {
+      display: flex; align-items: center; justify-content: center;
+      gap: 7px; margin-bottom: 20px; flex-wrap: wrap;
+    }
+    .sp-stat {
+      font-size: 11px; font-weight: 700;
+      background: #fff; border: 1px solid rgba(124,58,237,0.15);
+      padding: 4px 11px; border-radius: 100px;
+      color: var(--primary);
+    }
+    .sp-dot { color: rgba(28,16,40,0.2); font-size: 10px; }
+
+    /* ── Platform links — creator's main CTA section ── */
+    .platforms-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(28,16,40,0.3); margin-bottom: 10px;
+    }
+    .platforms { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+    .platform-card {
+      display: flex; align-items: center; gap: 12px;
+      background: #fff; border: 1px solid rgba(124,58,237,0.12);
+      border-radius: 14px; padding: 13px 16px;
+      text-decoration: none; color: var(--text);
+      transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+    }
+    .platform-card:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(124,58,237,0.12); border-color: var(--primary); }
+    .platform-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 18px; line-height: 1;
+    }
+    .platform-text { flex: 1; }
+    .platform-name { font-size: 14px; font-weight: 700; }
+    .platform-sub { font-size: 11px; color: rgba(28,16,40,0.4); margin-top: 1px; }
+    .platform-arrow { font-size: 14px; color: rgba(28,16,40,0.2); }
+
+    /* ── Featured content card ── */
+    .featured-wrap { margin-bottom: 24px; }
+    .featured-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(28,16,40,0.3); margin-bottom: 10px;
+    }
+    .featured-card {
+      display: flex; align-items: center; gap: 14px;
+      background: #fff; border: 1px solid rgba(124,58,237,0.12);
+      border-radius: 14px; padding: 14px 16px;
+      text-decoration: none; color: var(--text);
+      transition: transform 0.12s, box-shadow 0.12s;
+    }
+    .featured-card:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(124,58,237,0.12); }
+    .featured-thumb {
+      width: 48px; height: 48px; border-radius: 10px;
+      background: var(--bg); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+    }
+    .featured-text { flex: 1; }
+    .featured-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--primary); margin-bottom: 3px; }
+    .featured-title { font-size: 13px; font-weight: 700; line-height: 1.3; }
+    .featured-sub { font-size: 11px; color: rgba(28,16,40,0.4); margin-top: 2px; }
+    .featured-arrow { font-size: 14px; color: rgba(28,16,40,0.2); }
+
+    /* ── Collab / quiz shell ── */
+    .quiz-wrap {
+      background: var(--text); border-radius: 22px;
+      padding: 28px 24px 26px; color: #EDEDEA;
+      margin-bottom: 24px;
+    }
+
+    /* Step visibility */
+    .step { display: none; }
+    .step.active { display: block; animation: fadeUp 0.22s ease-out; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Progress dots */
+    .progress { display: flex; gap: 6px; margin-bottom: 22px; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(237,237,234,0.2); transition: background 0.3s, width 0.3s; }
+    .dot.done { background: var(--primary); }
+    .dot.active { background: var(--accent); width: 18px; border-radius: 3px; }
+
+    /* Step labels */
+    .step-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .step-q { font-size: 19px; font-weight: 800; letter-spacing: -0.4px; line-height: 1.2; margin-bottom: 6px; }
+    .step-sub { font-size: 13px; color: rgba(237,237,234,0.45); margin-bottom: 20px; line-height: 1.5; }
+
+    /* Option buttons */
+    .options { display: flex; flex-direction: column; gap: 9px; }
+    .opt {
+      display: flex; align-items: center; gap: 13px;
+      background: rgba(255,255,255,0.05);
+      border: 1.5px solid rgba(255,255,255,0.1);
+      border-radius: 13px; padding: 14px 16px;
+      cursor: pointer; text-align: left; width: 100%;
+      font-family: inherit; color: #EDEDEA;
+      transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    }
+    .opt:hover { border-color: var(--primary); background: rgba(124,58,237,0.15); transform: translateY(-1px); }
+    .opt:active { transform: translateY(0); }
+    .opt-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: rgba(255,255,255,0.07);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .opt-text { flex: 1; }
+    .opt-title { font-size: 14px; font-weight: 700; }
+    .opt-sub { font-size: 12px; color: rgba(237,237,234,0.45); margin-top: 2px; }
+    .opt-arrow { font-size: 14px; color: rgba(237,237,234,0.2); }
+
+    /* Contact fields */
+    .fields { display: flex; flex-direction: column; gap: 11px; margin-bottom: 18px; }
+    .field-wrap { display: flex; flex-direction: column; gap: 5px; }
+    .field-label { font-size: 11px; font-weight: 700; color: rgba(237,237,234,0.5); letter-spacing: 0.5px; }
+    .field-input, .field-textarea {
+      background: rgba(255,255,255,0.07);
+      border: 1.5px solid rgba(255,255,255,0.1);
+      border-radius: 10px; padding: 11px 14px;
+      font-family: inherit; font-size: 14px; color: #EDEDEA;
+      outline: none; transition: border-color 0.15s; width: 100%;
+    }
+    .field-input::placeholder, .field-textarea::placeholder { color: rgba(237,237,234,0.3); }
+    .field-input:focus, .field-textarea:focus { border-color: var(--primary); }
+    .field-textarea { resize: none; min-height: 72px; }
+    .field-optional { font-size: 10px; color: rgba(237,237,234,0.3); margin-left: 4px; font-weight: 400; }
+
+    /* Buttons */
+    .btn-primary {
+      display: block; width: 100%; text-align: center;
+      background: var(--primary); color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px; font-weight: 700;
+      padding: 14px; border-radius: 100px; border: none;
+      cursor: pointer; transition: opacity 0.2s, transform 0.12s;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-back {
+      background: none; border: none; color: rgba(237,237,234,0.35);
+      font-family: inherit; font-size: 12px; cursor: pointer;
+      padding: 10px 0 0; display: block; text-align: center;
+      transition: color 0.15s;
+    }
+    .btn-back:hover { color: rgba(237,237,234,0.7); }
+
+    /* Result screen */
+    .result-icon { font-size: 36px; margin-bottom: 12px; }
+    .result-name { font-size: 22px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 8px; }
+    .result-msg { font-size: 13px; color: rgba(237,237,234,0.55); line-height: 1.6; margin-bottom: 22px; }
+    .result-action {
+      display: block; text-align: center; background: var(--accent); color: #fff;
+      font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700;
+      padding: 13px 24px; border-radius: 100px; text-decoration: none;
+      transition: opacity 0.2s; margin-bottom: 10px;
+    }
+    .result-action:hover { opacity: 0.88; }
+    .result-action.secondary { background: rgba(255,255,255,0.08); color: rgba(237,237,234,0.7); }
+
+    /* ── Logo bar (collab credits) ── */
+    .logo-bar { margin-bottom: 24px; }
+    .logo-bar-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(28,16,40,0.28); margin-bottom: 14px;
+      text-align: center;
+    }
+    .logo-scroll {
+      overflow: hidden; width: 100%;
+      mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+    }
+    .logo-track {
+      display: flex; align-items: center; gap: 44px;
+      width: max-content; animation: scroll-logos 38s linear infinite;
+    }
+    .logo-track:hover { animation-play-state: paused; }
+    @keyframes scroll-logos {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .logo-item {
+      font-size: 13px; font-weight: 700;
+      color: rgba(28,16,40,0.3); white-space: nowrap; flex-shrink: 0;
+      transition: color 0.2s; cursor: default;
+    }
+    .logo-item:hover { color: rgba(28,16,40,0.6); }
+
+    /* ── Footer ── */
+    .footer { text-align: center; margin-top: 32px; font-size: 11px; color: rgba(28,16,40,0.3); }
+    .footer a { color: rgba(28,16,40,0.3); text-decoration: none; }
+    .footer a:hover { color: var(--primary); }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══════════════════════════════════════════════
+       CREATOR HEADER
+       Source: creator_name, handle, bio, logo_url
+  ══════════════════════════════════════════════ -->
+  <div class="profile">
+    <div class="avatar-wrap">
+      <img class="avatar-img" id="avatar-img" src="" alt=""/>
+      <span class="avatar-letter" id="avatar-letter">C</span>
+    </div>
+    <div class="creator-name" id="creator-name">Your Name</div>
+    <div class="creator-handle" id="creator-handle">@yourhandle</div>
+    <div class="creator-bio" id="creator-bio">What you make · who you make it for.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SOCIAL PROOF STRIP
+       Source: stat_1, stat_2, stat_3
+       Use follower counts, subscriber numbers, press logos, etc.
+       Example values: "42K followers", "Top 5% podcast", "Featured in Forbes"
+  ══════════════════════════════════════════════ -->
+  <div class="social-proof">
+    <span class="sp-stat" id="stat-1">—</span>
+    <span class="sp-dot" id="sp-dot-1">·</span>
+    <span class="sp-stat" id="stat-2">—</span>
+    <span class="sp-dot" id="sp-dot-2" style="display:none">·</span>
+    <span class="sp-stat" id="stat-3" style="display:none">—</span>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       FEATURED CONTENT
+       Source: featured_label, featured_title, featured_sub, featured_url, featured_icon
+       Highlight your latest or best piece of content.
+       Leave featured_url blank to hide this section.
+  ══════════════════════════════════════════════ -->
+  <div class="featured-wrap" id="featured-wrap" style="display:none">
+    <p class="featured-label" id="featured-label">Latest</p>
+    <a class="featured-card" id="featured-card" href="#" target="_blank" rel="noopener">
+      <div class="featured-thumb" id="featured-icon">▶️</div>
+      <div class="featured-text">
+        <div class="featured-eyebrow" id="featured-eyebrow">New</div>
+        <div class="featured-title" id="featured-title">Your featured content title</div>
+        <div class="featured-sub" id="featured-sub">Platform or description</div>
+      </div>
+      <span class="featured-arrow">›</span>
+    </a>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       PLATFORMS / LINKS
+       Source: platform_1 through platform_5
+       Each needs: _name, _sub, _url, _icon (emoji)
+       These are your main follow/subscribe CTAs.
+  ══════════════════════════════════════════════ -->
+  <p class="platforms-label">Find me on</p>
+  <div class="platforms" id="platforms-block">
+    <div style="font-size:12px;color:rgba(28,16,40,0.3);text-align:center;padding:16px 0">
+      Add your Sheet ID to load platforms
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       COLLAB / BRAND LOGOS CAROUSEL
+       Source: logo_1 through logo_12
+       Use brand names you've worked with, press features, etc.
+  ══════════════════════════════════════════════ -->
+  <div class="logo-bar" id="logo-bar-block" style="display:none">
+    <p class="logo-bar-label" id="trust-label">Seen in</p>
+    <div class="logo-scroll">
+      <div class="logo-track" id="logo-track">
+        <!-- Built from sheet data -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       COLLAB / QUIZ FUNNEL
+       ──────────────────────────────────────────────
+       For creators: routes visitors based on their intent
+       (follow, collab, buy, book).
+       
+       EDIT: Search "EDIT:" to find customizable zones.
+  ══════════════════════════════════════════════ -->
+  <div class="quiz-wrap">
+
+    <div class="progress" id="progress">
+      <div class="dot active" id="dot-0"></div>
+      <div class="dot" id="dot-1"></div>
+      <div class="dot" id="dot-2"></div>
+    </div>
+
+    <!-- ── Step 0: Intent ────────────────────────────
+         EDIT: Change options to match your creator offers.
+         'value' in pick('intent','VALUE') maps to routing below.
+    ─────────────────────────────────────────────── -->
+    <div class="step active" id="step-0">
+      <p class="step-label">Let's connect</p>
+      <h2 class="step-q" id="quiz-title">What brings you here?</h2>
+      <p class="step-sub" id="quiz-sub">I'll point you to exactly the right thing — takes 10 seconds.</p>
+      <div class="options">
+
+        <button class="opt" onclick="pick('intent','collab')">
+          <div class="opt-icon">🤝</div>
+          <div class="opt-text">
+            <div class="opt-title">I want to collaborate</div>
+            <div class="opt-sub">Brand deal, sponsorship, or creative partnership</div>
+          </div>
+          <span class="opt-arrow">›</span>
+        </button>
+
+        <button class="opt" onclick="pick('intent','hire')">
+          <div class="opt-icon">💼</div>
+          <div class="opt-text">
+            <div class="opt-title">I want to hire you</div>
+            <div class="opt-sub">Consulting, services, or custom work</div>
+          </div>
+          <span class="opt-arrow">›</span>
+        </button>
+
+        <button class="opt" onclick="pick('intent','resource')">
+          <div class="opt-icon">🎁</div>
+          <div class="opt-text">
+            <div class="opt-title">I want your stuff</div>
+            <div class="opt-sub">Courses, templates, products, or free resources</div>
+          </div>
+          <span class="opt-arrow">›</span>
+        </button>
+
+        <button class="opt" onclick="pick('intent','follow')">
+          <div class="opt-icon">✨</div>
+          <div class="opt-text">
+            <div class="opt-title">Just exploring</div>
+            <div class="opt-sub">I'm a fan — show me where to follow you</div>
+          </div>
+          <span class="opt-arrow">›</span>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- ── Step 1: Contact info ──────────────────────
+         Only shown for collab, hire, or resource paths.
+         Follow path skips straight to result.
+    ─────────────────────────────────────────────── -->
+    <div class="step" id="step-1">
+      <p class="step-label">Almost there</p>
+      <h2 class="step-q" id="contact-title">Let's make it happen</h2>
+      <p class="step-sub" id="contact-sub">Drop your info and I'll be in touch soon.</p>
+      <div class="fields">
+        <div class="field-wrap">
+          <label class="field-label">YOUR NAME</label>
+          <input class="field-input" id="f-name" type="text" placeholder="First name" autocomplete="given-name"/>
+        </div>
+        <div class="field-wrap">
+          <label class="field-label">EMAIL</label>
+          <input class="field-input" id="f-email" type="email" placeholder="you@example.com" autocomplete="email"/>
+        </div>
+        <div class="field-wrap">
+          <label class="field-label">TELL ME MORE <span class="field-optional">(optional)</span></label>
+          <textarea class="field-textarea" id="f-notes" placeholder="A sentence or two about what you have in mind."></textarea>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="submitForm()">Send it →</button>
+      <button class="btn-back" onclick="goBack(0)">← Back</button>
+    </div>
+
+    <!-- ── Step 2: Result screen ─────────────────────
+         EDIT: Update messages in showResult() below.
+    ─────────────────────────────────────────────── -->
+    <div class="step" id="step-2">
+      <div class="result-icon" id="result-icon">✨</div>
+      <h2 class="result-name" id="result-name">You're in.</h2>
+      <p class="result-msg" id="result-msg">Talk soon!</p>
+      <a class="result-action" id="result-cta" href="#" target="_blank" rel="noopener">Continue →</a>
+      <a class="result-action secondary" id="result-secondary" href="#" target="_blank" rel="noopener">Follow me →</a>
+    </div>
+
+  </div><!-- end quiz-wrap -->
+
+  <!-- ══════════════════════════════════════════════
+       FOOTER
+       Source: footer_text, website_url
+  ══════════════════════════════════════════════ -->
+  <div class="footer">
+    <a href="#" id="footer-link">
+      <span id="footer-text">yoursite.com</span>
+    </a>
+  </div>
+
+</div><!-- end page -->
+
+<script>
+  // ╔═══════════════════════════════════════════════════════╗
+  // ║  SETUP — PASTE YOUR PUBLISHED CSV URL HERE           ║
+  // ║                                                       ║
+  // ║  How to get this URL:                                ║
+  // ║  1. Open your Google Sheet                           ║
+  // ║  2. File → Share → Publish to web                   ║
+  // ║  3. Choose "Entire Document" and "CSV"               ║
+  // ║  4. Click Publish → copy the URL that appears        ║
+  // ║  5. Paste it below (replaces the placeholder)        ║
+  // ╚═══════════════════════════════════════════════════════╝
+  var SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSX3aCWY4NCnBY5BL2emp8Jz8nmSKfrXF5ZbPSSo9AkR4WJs_RuSF6WpVsq6me-CfEnTzGfywrdpJ8T/pub?output=csv';
+
+  // ── Runtime values (populated from sheet) ──
+  var WEBHOOK_URL = '';
+  var WEBSITE_URL = '#';
+  var CTA_URLS = { collab: '#', hire: '#', resource: '#', follow: '#' };
+  var CTA_TEXT = { collab: 'Let\'s work together →', hire: 'View my services →', resource: 'Get the goods →', follow: 'Follow me →' };
+
+  var quizState = { intent: null };
+
+  // ═══════════════════════════════════════════════════════
+  //  GOOGLE SHEETS CMS ENGINE
+  // ═══════════════════════════════════════════════════════
+
+  function loadSheet() {
+    if (!SHEET_URL || SHEET_URL.indexOf('YOUR_PUBLISHED') !== -1) return;
+    var url = SHEET_URL;
+    fetch(url)
+      .then(function(r) {
+        if (!r.ok) throw new Error(r.status);
+        return r.text();
+      })
+      .then(function(csv) { applyData(parseCSV(csv)); })
+      .catch(function(e) { console.warn('[BioFunnel Creator] Sheet load failed.', e.message); });
+  }
+
+  // Proper CSV parser — handles quoted fields, 2-column (KEY,VALUE),
+  // 3-column (KEY,LABEL,VALUE), and 4-column (KEY,LABEL,VALUE,HELP) sheets.
+  // Always reads column index 1 for 2-col sheets, column index 2 for 3+ col sheets.
+  // Works correctly when the value itself contains commas (Google Sheets quotes those).
+  function splitCSVLine(line) {
+    var cols = [], cur = '', inQ = false;
+    for (var i = 0; i < line.length; i++) {
+      var c = line[i];
+      if (c === '"') {
+        if (inQ && line[i + 1] === '"') { cur += '"'; i++; } // escaped quote
+        else inQ = !inQ;
+      } else if (c === ',' && !inQ) {
+        cols.push(cur); cur = '';
+      } else {
+        cur += c;
+      }
+    }
+    cols.push(cur);
+    return cols;
+  }
+
+  function parseCSV(csv) {
+    var result = {};
+    var lines = csv.split('\n');
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i].trim();
+      if (!line) continue;
+      var cols = splitCSVLine(line);
+      var key = (cols[0] || '').trim();
+      if (!key) continue;
+      var upper = key.toUpperCase();
+      // Skip header rows and section comment rows
+      if (upper === 'KEY' || upper === 'FIELD ID' || key.charAt(0) === '#') continue;
+      // 3+ columns → value is col[2]; 2 columns → value is col[1]
+      var val = cols.length >= 3 ? (cols[2] || '').trim() : (cols[1] || '').trim();
+      result[key] = val;
+    }
+    return result;
+  }
+
+  function applyData(d) {
+    var root = document.documentElement.style;
+
+    // ── Colors ──
+    if (d.primary_color)    root.setProperty('--primary', d.primary_color);
+    if (d.accent_color)     root.setProperty('--accent',  d.accent_color);
+    if (d.background_color) root.setProperty('--bg',      d.background_color);
+    if (d.text_color)       root.setProperty('--text',    d.text_color);
+
+    // ── Page title ──
+    if (d.creator_name) document.title = d.creator_name;
+
+    // ── Creator header ──
+    setText('creator-name',   d.creator_name);
+    setText('creator-handle', d.handle ? '@' + d.handle.replace('@','') : '');
+    setText('creator-bio',    d.bio);
+
+    // ── Avatar ──
+    if (d.logo_url) {
+      var img = document.getElementById('avatar-img');
+      img.src = d.logo_url; img.alt = d.creator_name || '';
+      img.style.display = 'block';
+      document.getElementById('avatar-letter').style.display = 'none';
+    } else {
+      var initial = d.logo_initial || (d.creator_name ? d.creator_name.charAt(0).toUpperCase() : 'C');
+      document.getElementById('avatar-letter').textContent = initial;
+    }
+
+    // ── Social proof stats ──
+    setStat('stat-1', 'sp-dot-1', d.stat_1, true);
+    setStat('stat-2', 'sp-dot-2', d.stat_2, false);
+    setStat('stat-3', 'sp-dot-3', d.stat_3, false);
+
+    // ── Featured content ──
+    if (d.featured_url) {
+      var fw = document.getElementById('featured-wrap');
+      if (fw) fw.style.display = 'block';
+      setText('featured-label',   d.featured_label   || 'Latest');
+      setText('featured-eyebrow', d.featured_eyebrow || 'New');
+      setText('featured-title',   d.featured_title);
+      setText('featured-sub',     d.featured_sub);
+      var fc = document.getElementById('featured-card');
+      if (fc) fc.href = d.featured_url;
+      if (d.featured_icon) setText('featured-icon', d.featured_icon);
+    }
+
+    // ── Platform links ──
+    buildPlatforms(d);
+
+    // ── Collab logo carousel ──
+    if (d.trust_label) setText('trust-label', d.trust_label);
+    buildLogos(d);
+
+    // ── Quiz text overrides ──
+    if (d.quiz_title) setText('quiz-title', d.quiz_title);
+    if (d.quiz_sub)   setText('quiz-sub',   d.quiz_sub);
+
+    // ── Footer ──
+    if (d.footer_text) setText('footer-text', d.footer_text);
+    WEBSITE_URL = d.website_url || '#';
+    var fl = document.getElementById('footer-link');
+    if (fl) fl.href = WEBSITE_URL;
+
+    // ── Runtime values ──
+    if (d.webhook_url) WEBHOOK_URL = d.webhook_url;
+    if (d.cta_collab_url)   CTA_URLS.collab   = d.cta_collab_url;
+    if (d.cta_hire_url)     CTA_URLS.hire     = d.cta_hire_url;
+    if (d.cta_resource_url) CTA_URLS.resource = d.cta_resource_url;
+    if (d.cta_follow_url)   CTA_URLS.follow   = d.cta_follow_url;
+    if (d.cta_collab_text)  CTA_TEXT.collab   = d.cta_collab_text;
+    if (d.cta_hire_text)    CTA_TEXT.hire     = d.cta_hire_text;
+    if (d.cta_resource_text) CTA_TEXT.resource = d.cta_resource_text;
+    if (d.cta_follow_text)  CTA_TEXT.follow   = d.cta_follow_text;
+  }
+
+  function setStat(statId, dotId, value, alwaysShowDot) {
+    var s = document.getElementById(statId);
+    var dot = document.getElementById(dotId);
+    if (!s) return;
+    if (value && value.trim()) {
+      s.textContent = value.trim();
+      s.style.display = '';
+      if (dot && !alwaysShowDot) dot.style.display = '';
+    } else {
+      s.style.display = 'none';
+      if (dot) dot.style.display = 'none';
+    }
+  }
+
+  function buildPlatforms(d) {
+    var container = document.getElementById('platforms-block');
+    if (!container) return;
+    var html = '';
+    for (var i = 1; i <= 5; i++) {
+      var name = d['platform_' + i + '_name'];
+      var sub  = d['platform_' + i + '_sub']  || '';
+      var url  = d['platform_' + i + '_url'];
+      var icon = d['platform_' + i + '_icon'] || '🔗';
+      if (!name || !url) continue;
+      html +=
+        '<a class="platform-card" href="' + escAttr(url) + '" target="_blank" rel="noopener">' +
+          '<div class="platform-icon">' + icon + '</div>' +
+          '<div class="platform-text">' +
+            '<div class="platform-name">' + esc(name) + '</div>' +
+            (sub ? '<div class="platform-sub">' + esc(sub) + '</div>' : '') +
+          '</div>' +
+          '<span class="platform-arrow">›</span>' +
+        '</a>';
+    }
+    if (html) container.innerHTML = html;
+  }
+
+  function buildLogos(d) {
+    var track = document.getElementById('logo-track');
+    var bar   = document.getElementById('logo-bar-block');
+    if (!track) return;
+    var logos = [];
+    for (var i = 1; i <= 12; i++) {
+      var n = d['logo_' + i];
+      if (n && n.trim()) logos.push(n.trim());
+    }
+    if (!logos.length) return;
+    if (bar) bar.style.display = '';
+    var all = logos.concat(logos);
+    track.innerHTML = all.map(function(n) {
+      return '<span class="logo-item">' + esc(n) + '</span>';
+    }).join('');
+  }
+
+  // ── Helpers ──
+  function setText(id, val) {
+    if (!val) return;
+    var el = document.getElementById(id);
+    if (el) el.textContent = val;
+  }
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function escAttr(s) { return String(s).replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+
+  // ═══════════════════════════════════════════════════════
+  //  QUIZ NAVIGATION
+  // ═══════════════════════════════════════════════════════
+
+  function pick(key, value) {
+    quizState[key] = value;
+    // 'follow' intent goes straight to result (no contact form)
+    if (key === 'intent' && value === 'follow') {
+      showResult(null, null, 'follow');
+      goTo(2);
+    } else {
+      // Update contact step copy based on intent
+      updateContactStep(value);
+      goTo(1);
+    }
+  }
+
+  function updateContactStep(intent) {
+    var titles = {
+      collab:   'Tell me about the opportunity',
+      hire:     'Tell me what you need',
+      resource: 'Where should I send it?'
+    };
+    var subs = {
+      collab:   'I'll get back to you within 48 hours.',
+      hire:     'I'll reach out with next steps shortly.',
+      resource: 'Drop your email and I'll send it right over.'
+    };
+    setText('contact-title', titles[intent] || 'Let's make it happen');
+    setText('contact-sub',   subs[intent]   || 'Drop your info and I'll be in touch soon.');
+  }
+
+  function goTo(n) {
+    document.querySelectorAll('.step').forEach(function(s) { s.classList.remove('active'); });
+    document.getElementById('step-' + n).classList.add('active');
+    updateDots(n);
+    var qw = document.querySelector('.quiz-wrap');
+    if (qw) window.scrollTo({ top: qw.offsetTop - 20, behavior: 'smooth' });
+  }
+
+  function goBack(n) { goTo(n); }
+
+  function updateDots(current) {
+    [0, 1, 2].forEach(function(i) {
+      var d = document.getElementById('dot-' + i);
+      if (!d) return;
+      d.className = 'dot';
+      if (i < current)   d.classList.add('done');
+      if (i === current) d.classList.add('active');
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════
+  //  FORM SUBMISSION
+  // ═══════════════════════════════════════════════════════
+
+  function submitForm() {
+    var name  = document.getElementById('f-name').value.trim();
+    var email = document.getElementById('f-email').value.trim();
+    var notes = document.getElementById('f-notes').value.trim();
+
+    if (!name)  { document.getElementById('f-name').focus(); return; }
+    if (!email || !email.includes('@')) { document.getElementById('f-email').focus(); return; }
+
+    showResult(name, email, quizState.intent);
+    goTo(2);
+
+    if (WEBHOOK_URL) {
+      fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name:   name,
+          email:  email,
+          intent: quizState.intent,
+          notes:  notes,
+          source: 'biofunnel-creator'
+        })
+      }).catch(function() {});
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════
+  //  RESULT SCREEN
+  //
+  //  EDIT: Update these messages to match your voice.
+  //  CTA URLs come from your Google Sheet.
+  // ═══════════════════════════════════════════════════════
+  function showResult(name, email, intent) {
+    var first = name ? name.split(' ')[0] : null;
+    var greeting = first ? 'Got it, ' + first + '. ' : 'Done. ';
+
+    var icon = document.getElementById('result-icon');
+    var msg  = document.getElementById('result-msg');
+    var cta  = document.getElementById('result-cta');
+    var sec  = document.getElementById('result-secondary');
+
+    if (intent === 'collab') {
+      if (icon) icon.textContent = '🤝';
+      setText('result-name', greeting + 'Let\'s make something.');
+      if (msg) msg.textContent = 'I'll review your message and be in touch within 48 hours. Can't wait to hear more.';
+      if (cta) { cta.textContent = CTA_TEXT.collab; cta.href = CTA_URLS.collab; }
+    } else if (intent === 'hire') {
+      if (icon) icon.textContent = '💼';
+      setText('result-name', greeting + 'Love it.');
+      if (msg) msg.textContent = 'I'll reach out to ' + (email || 'you') + ' with availability and next steps.';
+      if (cta) { cta.textContent = CTA_TEXT.hire; cta.href = CTA_URLS.hire; }
+    } else if (intent === 'resource') {
+      if (icon) icon.textContent = '🎁';
+      setText('result-name', greeting + 'It\'s on its way.');
+      if (msg) msg.textContent = 'Check your inbox at ' + (email || 'the email you provided') + '. If you don\'t see it in a few minutes, check your spam folder.';
+      if (cta) { cta.textContent = CTA_TEXT.resource; cta.href = CTA_URLS.resource; }
+    } else {
+      // follow
+      if (icon) icon.textContent = '✨';
+      setText('result-name', 'Hey, glad you\'re here.');
+      if (msg) msg.textContent = 'Follow me wherever feels right — I\'ll see you there.';
+      if (cta) { cta.textContent = CTA_TEXT.follow; cta.href = CTA_URLS.follow; }
+    }
+
+    if (sec) { sec.href = WEBSITE_URL; sec.textContent = 'Back to the top ↑'; sec.setAttribute('onclick','window.scrollTo({top:0,behavior:\'smooth\'});return false;'); }
+  }
+
+  // ── Init ──
+  document.addEventListener('DOMContentLoaded', loadSheet);
+</script>
+</body>
+</html>
